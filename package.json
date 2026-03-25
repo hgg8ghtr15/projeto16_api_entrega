@@ -1,0 +1,29 @@
+{
+  "name": "projeto16_api_entrega",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hgg8ghtr15/projeto16_api_entrega.git"
+  },
+  "author": "Fabio Lucas Marconi",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/hgg8ghtr15/projeto16_api_entrega/issues"
+  },
+  "homepage": "https://github.com/hgg8ghtr15/projeto16_api_entrega#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.5.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  }
+}
