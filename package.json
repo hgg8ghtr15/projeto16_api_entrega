@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/hgg8ghtr15/projeto16_api_entrega#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
