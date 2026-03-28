@@ -10,6 +10,7 @@ datasource db {
 enum UserRole {
   customer
   sale
+  admin
 }
 
 enum DeliveryStatus {
@@ -41,25 +42,23 @@ model Delivery {
 
   status DeliveryStatus @default(processing)
 
-  user User @relation(fields: [userId], references: [id])
+  user         User          @relation(fields: [userId], references: [id])
   deliveryLogs DeliveryLog[]
 
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
 
-
   @@map("deliveries")
 }
 
-model DeliveryLog{
-  id String @id @default(uuid())
+model DeliveryLog {
+  id          String   @id @default(uuid())
   description String
-  deliveryId String @map("delivery_id")
-  delivery Delivery @relation(fields: [deliveryId], references: [id])
-  
+  deliveryId  String   @map("delivery_id")
+  delivery    Delivery @relation(fields: [deliveryId], references: [id])
+
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
 
   @@map("delivery_logs")
 }
-

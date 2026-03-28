@@ -4,6 +4,18 @@ import { hash } from "bcrypt";
 import { prisma } from "@/database/prisma";
 import { AppError } from "@/utils/AppError";
 
+async function ensureUserExists(id: string) {
+    const user = await prisma.user.findUnique({
+        where: { id }
+    });
+
+    if (!user) {
+        throw new AppError("Usuario não encontrado", 404);
+    }
+
+    return user;
+}
+
 class UsersController {
     async create(req: Request, res: Response) {
 
@@ -35,13 +47,55 @@ class UsersController {
         })
 
         const { password: _, ...userWithoutPassword } = user;
-        
+
         return res.status(201).json({ message: "Usuário criado com sucesso", user: userWithoutPassword });
     }
 
     async index(req: Request, res: Response) {
+        const users = await prisma.user.findMany();
 
-        return res.status(201).json({ message: "Usuarios listado com Sucesso" });
+        const usersWithoutPassword = users.map(({ password: _, ...user }) => user);
+
+        return res.status(200).json({ message: "Usuarios listado com Sucesso", users: usersWithoutPassword });
+    }
+
+    async editPerfil(req: Request, res: Response) {
+        const id = req.params.id as string;
+
+        const bodySchema = z.object({
+            role: z.enum(["sale", "customer", "admin"], "Perfil inválido"),
+        });
+
+        const { role } = bodySchema.parse(req.body);
+
+        await ensureUserExists(id);
+
+        const user = await prisma.user.update({
+            where: {
+                id
+            },
+            data: {
+                role
+            }
+        })
+
+        const { password: _, ...userWithoutPassword } = user;
+
+        return res.status(200).json({ message: "Usuario atualizado com sucesso", user: userWithoutPassword });
+    }
+
+    async delete(req: Request, res: Response) {
+        const id = req.params.id as string;
+
+        await ensureUserExists(id);
+
+        await prisma.user.delete({
+            where: {
+                id
+            }
+        })
+
+        return res.status(200).json({ message: "Usuario deletado com sucesso" });
     }
 }
 
