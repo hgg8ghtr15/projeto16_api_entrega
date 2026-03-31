@@ -27,6 +27,10 @@ class DeliveryLogsController {
             throw new AppError("Produto ainda está em processamento!", 400);
         }
 
+        if (delivery.status === "delivered") {
+            throw new AppError("Produto já foi entregue e não pode receber mais Logs!", 400);
+        }
+
         const log = await prisma.deliveryLog.create({
             data: {
                 description,
@@ -52,7 +56,7 @@ class DeliveryLogsController {
         });
         return res.json({ message: "Logs listados com sucesso", delivery });
     }
-    
+
     async show(req: Request, res: Response) {
         const paramsSchema = z.object({
             id: z.string().min(5, "ID da entrega inválido"),
