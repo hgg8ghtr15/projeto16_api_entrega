@@ -38,7 +38,7 @@ class SessionsController {
     })
 
     const { password: _, ...userWithoutPassword } = user;
-    return res.status(201).json({ token, user: userWithoutPassword });
+    return res.status(201).json({ message: "Sessão criada com sucesso", token, user: userWithoutPassword });
   }
 }
 
