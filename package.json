@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch --env-file .env src/server.ts",
-    "test:dev": "cross-env NODE_OPTIONS=--experimental-vm-modules node --env-file .env node_modules/jest/bin/jest.js --watch --runInBand"
+    "test:dev": "cross-env NODE_OPTIONS=--experimental-vm-modules node --env-file .env node_modules/jest/bin/jest.js --watch --runInBand",
+    "build": "tsup src/server.ts --clean --format cjs --out-dir build --shims",
+    "start": "node --env-file .env build/server.js"
 
   },
   "repository": {
@@ -40,8 +42,9 @@
     "jest": "^30.3.0",
     "prisma": "^7.5.0",
     "supertest": "^7.2.2",
-    "ts-jest": "^29.4.6",
+    "ts-jest": "^29.4.9",
     "ts-node": "^10.9.2",
+    "tsup": "^8.5.1",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2"
   }
