@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "tsx watch --env-file .env src/server.ts",
     "test:dev": "cross-env NODE_OPTIONS=--experimental-vm-modules node --env-file .env node_modules/jest/bin/jest.js --watch --runInBand",
-    "build": "tsup src/server.ts --clean --format cjs --out-dir build --shims",
+    "build": "npx prisma generate && tsup src/server.ts --clean --format cjs --out-dir build --shims",
+    "postinstall": "npx prisma generate",
     "start": "node --env-file .env build/server.js"
-
   },
   "repository": {
     "type": "git",
